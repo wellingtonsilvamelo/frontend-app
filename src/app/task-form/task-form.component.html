@@ -1,0 +1,16 @@
+<form [formGroup]="taskForm" (ngSubmit)="onSubmit()">
+    <div class="modal-body">
+        <div class="form-group">
+            <label for="recipient-name" class="col-form-label">Task Title:</label>
+            <input  type="text" class="form-control" id="recipient-name" formControlName="title" required>
+        </div>
+        <div class="form-group">
+            <label for="message-text" class="col-form-label">Task Description:</label>
+            <textarea class="form-control" id="message-text" formControlName="description" required></textarea>
+        </div>
+    </div>
+    <div class="modal-footer">
+        <button type="submit" class="btn btn-primary btn-block"
+            style="margin-top: 0 !important;" required>Save</button>
+    </div>
+</form>

@@ -1,0 +1,100 @@
+<div class="jumbotron">
+  <div class="container">
+    <h1>TODO List</h1>
+  </div>
+</div>
+
+<div class="container">
+  <div class="card bg-light border-0" style="margin-bottom: 15px;">
+    <div class="card-body">
+      <div class="row">
+        <div class="col-12">
+          <div class="input-group">
+            <div class="input-group-prepend">
+              <span class="input-group-text bg-white border-0 pr-1" id="basic-addon1"><i class="fas {{isLoadingResults ? 'fa-sync faa-spin animated' : 'fa-search'}}"></i></span>
+            </div>
+            <input type="text" #mySearchBox (keyup)="onKeyUp(mySearchBox.value)" class="form-control border-0 fs-custom" placeholder="Search your task here!"
+              aria-label="Search your task here!" aria-describedby="button-addon2">
+            <div class="input-group-append" tooltip="Click here to add a new task." [ngClass]="{'disabledDiv': isLoadingResults}">
+              <button class="btn btn-secondary border-0" type="button" id="button-addon2" (click)="taskModalForm.show()"><i
+                  class="fas" [ngClass]="{'fa-plus': isLoadingResults == false, 'fa-sync faa-spin animated': isLoadingResults}"></i></button>
+            </div>
+          </div>
+        </div>
+      </div>
+    </div>
+  </div>
+</div>
+
+<div class="container">
+  <!-- <div class="my-spinner"></div> -->
+  <ul class="list-group list-group-flush mb-3" [ngClass]="{'disabledDiv': isLoadingResults}">
+    <li class="list-group-item list-group-item-action" *ngFor="let task of returnedArray">
+      <div class="d-flex w-100 justify-content-between">
+        <h5 class="mb-1 flex-grow-1">{{task.title}}</h5>
+        <button type="button" class="btn btn-secondary btn-sm mr-2" (click)="confirmYourChoice(task)"><i class="fas" [ngClass]="{'fa-trash-alt': isLoadingResults == false, 'fa-sync faa-spin animated': isLoadingResults}"></i></button>
+        <button type="button" class="btn btn-info btn-sm" (click)="detail(task)"><i class="fas" [ngClass]="{'fa-edit': isLoadingResults == false, 'fa-sync faa-spin animated': isLoadingResults}"></i></button>
+      </div>
+      <p class="mb-1">{{task.text}}</p>
+      <small><strong>Created at</strong> {{ task.creationDate | date:"dd/MM/yyy" }}</small>
+    </li>
+  </ul>
+</div>
+<div class="container" *ngIf="contentArray.length > itemsPerPage">
+  <div class="row">
+    <div class="col-md-12">
+      <div class="d-flex w-100 flex-row-reverse" [ngClass]="{'disabledDiv': isLoadingResults}">
+        <pagination [(ngModel)]="currentPage" [itemsPerPage]="itemsPerPage" [boundaryLinks]="true" [totalItems]="contentArray.length" [maxSize]="5" previousText="&lsaquo;" nextText="&rsaquo;"
+          firstText="&laquo;" lastText="&raquo;" (pageChanged)="pageChanged($event)">
+        </pagination>
+      </div>
+    </div>
+  </div>
+</div>
+
+<app-custom-modal id="modal1" (handlerModalEvent)="modalHideHandler($event)" (modalChoiceEvent)="delete($event)"></app-custom-modal>
+
+<div bsModal #taskModalForm="bs-modal" id="chieldModal1" class="modal fade" tabindex="-1"
+     role="dialog" aria-labelledby="dialog-child-name" (onHide)="modalHideHandler($event)">
+  <div class="modal-dialog modal-sm">
+    <div class="modal-content">
+      <!-- <div class="modal-header">
+        <h4 id="dialog-child-name" class="modal-title pull-left">{{modalTitle}}</h4>
+        <button type="button" class="close pull-right" aria-label="Close" (click)="childModal.hide()">
+          <span aria-hidden="true">&times;</span>
+        </button>
+      </div> -->
+      <app-task-form #f></app-task-form>
+            
+    </div>
+  </div>
+</div>
+
+<div bsModal #taskModalForm2="bs-modal" id="chieldModal1" class="modal fade" tabindex="-1"
+     role="dialog" aria-labelledby="dialog-child-name">
+  <div class="modal-dialog modal-sm">
+    <div class="modal-content">
+      <!-- <div class="modal-header">
+        <h4 id="dialog-child-name" class="modal-title pull-left">{{modalTitle}}</h4>
+        <button type="button" class="close pull-right" aria-label="Close" (click)="childModal.hide()">
+          <span aria-hidden="true">&times;</span>
+        </button>
+      </div> -->
+      <div class="modal-body">
+        <form>
+          <div class="form-group">
+            <label for="recipient-name" class="col-form-label">Task Title:</label>
+            <input type="text" class="form-control" id="recipient-name" required>
+          </div>
+          <div class="form-group">
+            <label for="message-text" class="col-form-label">Task Description:</label>
+            <textarea class="form-control" id="message-text" required></textarea>
+          </div>
+        </form>       
+      </div>
+      <div class="modal-footer">
+        <button type="button" class="btn btn-primary btn-block" (click)="save()" style="margin-top: 0 !important;">Save</button>
+      </div>
+    </div>
+  </div>
+</div>

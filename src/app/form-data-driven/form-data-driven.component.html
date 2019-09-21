@@ -1,0 +1,52 @@
+<div class="jumbotron">
+    <div class="container">
+        <h1 class="text-center">Cadastro do usuário</h1>
+    </div>
+</div>
+
+<div class="container">
+    <form [formGroup]="formulario" (ngSubmit)="onSubmit()">
+        <div class="d-flex justify-content-center">
+        <div class="col-md-4">
+            <div class="form-group">
+                <label for="inputName4">Nome</label>
+                <input type="text" class="form-control" [ngClass]="applyCssErr('nome')" formControlName="nome"
+                    id="inputName4" placeholder="Nome">
+                <div class="invalid-feedback">
+                    <app-error-message [control]="formulario.get('nome')" [label]="'Nome'"></app-error-message>
+                </div>
+            </div>            
+            <div class="form-group">
+                <label for="inputEmail">Email</label>
+                <input type="email" class="form-control" [ngClass]="applyCssErr('email')" formControlName="email"
+                    id="inputEmail" placeholder="Email">
+                <div class="invalid-feedback">
+                    <app-error-message [control]="formulario.get('email')" [label]="'Email'"></app-error-message>
+                </div>
+            </div>
+            <div class="form-group">
+                <label for="inputSenha">Senha</label>
+                <input type="password" class="form-control" [ngClass]="applyCssErr('senha')" formControlName="senha"
+                    id="inputSenha" placeholder="Senha">
+                <div class="invalid-feedback">
+                    <app-error-message [control]="formulario.get('senha')" [label]="'Senha'"></app-error-message>
+                </div>
+            </div>
+            <div class="form-group">
+                <label for="inputConfirmarSenha">Confrmar senha</label>
+                <input type="password" class="form-control" [ngClass]="applyCssErr('confirmarSenha')" formControlName="confirmarSenha"
+                    id="inputConfirmarSenha" placeholder="Confirmar Senha">
+                <div class="invalid-feedback">
+                    <app-error-message [control]="formulario.get('confirmarSenha')" [label]="'Senhas'"></app-error-message>
+                </div>
+            </div>
+        </div>
+    </div>
+        <div class="d-flex justify-content-center">
+                <div class="col-md-4">
+            <button type="submit" class="btn btn-primary btn-block">Salvar</button></div>
+        </div>
+    </form>
+    <!-- <pre>Form: {{formulario.valid}}</pre>
+    <pre>{{formulario.value | json}}</pre> -->
+</div>
